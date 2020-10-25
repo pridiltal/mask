@@ -1,0 +1,19 @@
+Package: mask
+Type: Package
+Title: Anomaly Detection in Multivariate Spatio-temporal data with K-measurements
+Version: 0.1.0.9999
+Authors@R: person("Priyanga Dilini", "Talagala", email="pritalagala@gmail.com", role= c("aut","cre"), comment = c(ORCID = "0000-0003-2870-7449"))
+Maintainer: Priyanga Dilini Talagala <pritalagala@gmail.com>
+Description: Provides a framework to detect spatial anomalies in multivariate spatio-temporal data (tensor data, multiway data). An anomaly is a spatial point or region that deviates significantly from the global and/or local distribution of a given network.
+Imports:
+    rrcov3way,
+    stray,
+    magrittr,
+    dplyr,
+    ggplot2
+Suggests: 
+    viridis
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
