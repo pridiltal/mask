@@ -28,24 +28,36 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(mask)
 library(rrcov3way)
-#> Loading required package: rrcov
-#> Loading required package: robustbase
-#> Scalable Robust Estimators with High Breakdown Point (version 1.5-2)
-#> Robust Methods for Multiway Data Analysis, Applicable also for
-#> Compositional Data (version 0.1-18)
-#> 
-#> Attaching package: 'rrcov3way'
-#> The following object is masked from 'package:stats':
-#> 
-#>     reorder
 data(Arno)
 
-result <- find_spatial_outlier( data = Arno, center.mode = "B", scale.mode = "B", tensor_decom = "Tucker3")
+result <- find_spatial_outlier(data = Arno, center.mode = "B", scale.mode = "B", tensor_decom = "Tucker3")
 p <- plot_spatial_outliers(X = result$out_data)
 p + viridis::scale_color_viridis(discrete = TRUE) +
-ggplot2::xlim(-1.1,0.1)
-#> Scale for 'colour' is already present. Adding another scale for 'colour',
-#> which will replace the existing scale.
+  ggplot2::xlim(-1.1, 0.1)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
+
+``` r
+library(tidyverse)
+library(purrr)
+data <- purrr::array_tree(Arno, 3) %>%
+  combine() %>%
+  as_tibble() %>%
+  setNames(., colnames(Arno)) %>%
+  mutate(
+    site = rep(rownames(Arno), dim(Arno)[3]),
+    time = rep(dimnames(Arno)[[3]], each = dim(Arno)[1]),
+    type = rep(result$out_data$type, dim(Arno)[3])
+  ) %>%
+  pivot_longer(1:11, names_to = "ID")
+
+p <- data %>% ggplot(aes(x = ID, y = value, colour = type, group = site)) +
+  geom_line() +
+  facet_wrap(~time, ncol = 1, scales = "free_y") +
+  scale_color_viridis_d()
+
+print(p)
+```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
