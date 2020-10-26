@@ -5,6 +5,13 @@
 
 <!-- badges: start -->
 
+[![Project Status: WIP – Initial development is in progress, but there
+has not yet been a stable, usable release suitable for the
+public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Licence](https://img.shields.io/badge/licence-GPL--2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+
+[![Build
+Status](https://travis-ci.com/pridiltal/mask.svg?branch=master)](https://travis-ci.org/pridiltal/mask)
 <!-- badges: end -->
 
 The goal of mask is to provide a framework to detect spatial anomalies
