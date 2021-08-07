@@ -25,11 +25,9 @@ using the first two pricipal components.
 library(rrcov3way)
 data(Arno)
 result <- find_spatial_outlier(
-  data = Arno, center.mode = "B",
-  scale.mode = "B", tensor_decom = "Tucker3"
+  data = Arno, tensor_decom = "Tucker3"
 )
 p <- plot_spatial_outliers(X = result$out_data)
-p + viridis::scale_color_viridis(discrete = TRUE) +
-ggplot2::xlim(-1.1,0.1)
+print(p)
 
 }

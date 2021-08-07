@@ -11,3 +11,4 @@
 #' @docType package
 #' @name  mask
 NULL
+utils::globalVariables(c("site_ID", "type", "site", "score"))

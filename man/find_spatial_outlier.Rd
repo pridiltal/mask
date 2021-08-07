@@ -10,9 +10,9 @@ find_spatial_outlier(
   center = TRUE,
   center.mode = c("A", "B", "C"),
   scale = TRUE,
-  scale.mode = c("B", "A", "C"),
+  scale.mode = c("A", "B", "C"),
   alpha = 0.01,
-  tensor_decom = c("parafac", "Tucker3")
+  tensor_decom = c("Tucker3", "parafac")
 )
 }
 \arguments{

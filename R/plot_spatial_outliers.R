@@ -1,3 +1,4 @@
+
 #' Display spatial outliers in two dimensional A-mode component plot
 #'
 #' @description Provide a 2D scatterplot of data for visual exploration.
@@ -15,28 +16,30 @@
 #' library(rrcov3way)
 #' data(Arno)
 #' result <- find_spatial_outlier(
-#'   data = Arno, center.mode = "B",
-#'   scale.mode = "B", tensor_decom = "Tucker3"
+#'   data = Arno, tensor_decom = "Tucker3"
 #' )
 #' p <- plot_spatial_outliers(X = result$out_data)
-#' p + viridis::scale_color_viridis(discrete = TRUE) +
-#' ggplot2::xlim(-1.1,0.1)
+#' print(p)
 #'
 plot_spatial_outliers <- function(X, label_outlier = TRUE, nudge_y = 0.05) {
 
-  F1 = F2 =  site = type = NULL
-  p <- ggplot(data = X, aes(F1, F2, color = type)) +
+  X <- X %>%
+    mutate(site_ID = 1:nrow(X))
+  p <- ggplot(data = X, aes(x= site_ID, y = score, color = type)) +
     geom_point() +
     scale_color_manual(values = c("outlier" = "red", "typical" = "black")) +
     theme(aspect.ratio = 1) +
-    ggtitle("Component plot, A-mode") +
-    xlab("First Component") +
-    ylab("Second Component")
+    ggtitle("Outlier scores") +
+    xlab("Site") +
+    ylab("Outlier scores")
 
   if (label_outlier) {
     out_data <- X %>% dplyr::filter(type == "outlier")
     p <- p +
-      geom_text(data = out_data, aes(x = F1, y = F2, label = site), color = "black", nudge_y = nudge_y)
+      geom_text(data = out_data, aes(x= site_ID,
+                                     y = score,
+                                     label = site),
+                color = "black", nudge_y = nudge_y)
   }
   return(p)
 }

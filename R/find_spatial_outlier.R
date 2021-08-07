@@ -29,21 +29,30 @@
 #' )
 #' result$out_data
 find_spatial_outlier <- function(data, ncomp = 2, center = TRUE, center.mode = c("A", "B", "C"),
-                                 scale = TRUE, scale.mode = c("B", "A", "C"), alpha = 0.01, tensor_decom = c("parafac", "Tucker3")) {
-  if (tensor_decom == "parafac") {
-    res <- rrcov3way::Parafac(data, ncomp, center, center.mode, scale, scale.mode)
-  }
+                                 scale = TRUE, scale.mode = c("A", "B", "C"), alpha = 0.01,
+                                 tensor_decom = c("Tucker3", "parafac")) {
+
   if (tensor_decom == "Tucker3") {
-    res <- rrcov3way::Tucker3(data)
+    res <- rrcov3way::Tucker3(data, robust = TRUE)
+  }
+  if (tensor_decom == "parafac") {
+    res <- rrcov3way::Parafac(data, ncomp, center,
+                              center.mode, scale,
+                              scale.mode, robust = TRUE )
   }
 
-  out <- stray::find_HDoutliers(res$A, alpha = alpha)
-  out_data <- res$A %>%
+  out <- stray::find_HDoutliers(res$rd, alpha = alpha)
+  out_data <- res$rd %>%
     as.data.frame() %>%
-    dplyr::mutate(site = rownames(res$A), type = out$type, score = out$out_scores)
+    dplyr::mutate(site = rownames(res$A),
+                  type = out$type,
+                  score = out$out_scores) %>%
+    dplyr::select(site, type, score)
 
   return(list(
-    outliers = out$outliers, out_scores = out$out_scores,
-    type = out$type, out_data = out_data
+    outliers = out$outliers,
+    out_scores = out$out_scores,
+    type = out$type,
+    out_data = out_data
   ))
 }
