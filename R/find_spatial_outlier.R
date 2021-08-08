@@ -24,8 +24,7 @@
 #' library(rrcov3way)
 #' data(Arno)
 #' result <- find_spatial_outlier(
-#'   data = Arno, center.mode = "B",
-#'   scale.mode = "B", tensor_decom = "Tucker3"
+#'   data = Arno, tensor_decom = "Tucker3"
 #' )
 #' result$out_data
 find_spatial_outlier <- function(data, ncomp = 2, center = TRUE, center.mode = c("A", "B", "C"),

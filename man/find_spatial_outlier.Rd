@@ -47,8 +47,7 @@ two dimensional feature space.
 library(rrcov3way)
 data(Arno)
 result <- find_spatial_outlier(
-  data = Arno, center.mode = "B",
-  scale.mode = "B", tensor_decom = "Tucker3"
+  data = Arno, tensor_decom = "Tucker3"
 )
 result$out_data
 }

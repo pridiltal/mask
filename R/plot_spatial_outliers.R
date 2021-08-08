@@ -28,7 +28,6 @@ plot_spatial_outliers <- function(X, label_outlier = TRUE, nudge_y = 0.05) {
   p <- ggplot(data = X, aes(x= site_ID, y = score, color = type)) +
     geom_point() +
     scale_color_manual(values = c("outlier" = "red", "typical" = "black")) +
-    theme(aspect.ratio = 1) +
     ggtitle("Outlier scores") +
     xlab("Site") +
     ylab("Outlier scores")
